@@ -1,0 +1,32 @@
+AC_PREREQ([2.61])
+AC_INIT([qfv], [0], [dotb52@gmail.com])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+
+AC_CONFIG_MACRO_DIR([m4])
+ACLOCAL_AMFLAGS = -I m4
+
+AC_LANG([C])
+AC_PROG_CC_C99
+AC_PROG_INSTALL
+
+AM_DISABLE_STATIC
+AM_PROG_LIBTOOL
+
+AC_CONFIG_SRCDIR([src/qfv.c])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_FILES([Makefile src/Makefile src/libqfv/Makefile src/modules/Makefile data/Makefile])
+
+AC_HEADER_STDC
+AC_CHECK_HEADERS([locale.h string.h])
+
+PKG_CHECK_MODULES(GTK, [gtk+-2.0])
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
+
+AM_CFLAGS="-Wall"
+AM_LDFLAGS="-Wl,--as-needed"
+AC_SUBST(AM_CFLAGS)
+AC_SUBST(AM_LDFLAGS)
+
+AC_OUTPUT
+
