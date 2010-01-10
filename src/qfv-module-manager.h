@@ -3,6 +3,9 @@
 
 #include <glib-object.h>
 
+#include <libqfv/qfv-module.h>
+#include <libqfv/qfv-plugin.h>
+
 #define QFV_TYPE_MODULE_MANAGER (qfv_module_manager_get_type())
 #define QFV_MODULE_MANAGER(o) (G_TYPE_CHECK_INSTANCE_CAST((o), \
     QFV_TYPE_MODULE_MANAGER, QfvModuleManager))
@@ -29,7 +32,10 @@ struct _QfvModuleManagerClass {
     GObjectClass parent_class;
 };
 
-GType qfv_module_maanger_get_type() G_GNUC_CONST;
+extern GType qfv_module_manager_get_type() G_GNUC_CONST;
+
+extern QfvModuleManager *qfv_module_manager_new(const gchar *module_path);
+extern QfvPlugin *qfv_module_manager_find_plugin(const gchar *filename);
 
 #endif
 

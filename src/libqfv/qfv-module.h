@@ -1,3 +1,24 @@
+/**
+ * This file is part of qfv.
+ * Copyright (C) 2009,2010  Oliver Mader <dotb52@gmail.com>
+ *
+ * AUTHORS
+ *     Oliver Mader <dotb52@gmail.com>
+ *
+ * Qfv is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Qfv is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with qfv.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef QFV_MODULE_H
 #define QFV_MODULE_H
 
@@ -23,20 +44,19 @@ struct _QfvModule {
     gchar *filename;
     GModule *library;
 
-    void (* load)(QfvModule *module);
-    void (* unload)(QfvModule *module);
+    void (* load) (QfvModule *module);
+    void (* unload) (QfvModule *module);
 };
 
 struct _QfvModuleClass {
     GTypeModuleClass parent_class;
 };
 
-GType qfv_module_get_type() G_GNUC_CONST;
+extern GType qfv_module_get_type() G_GNUC_CONST;
 
-QfvModule *qfv_module_new(const gchar *filename);
-
-void qfv_module_load(QfvModule *module);
-void qfv_module_unload(QfvModule *module);
+extern QfvModule *qfv_module_new(const gchar *filename);
+extern void qfv_module_load(QfvModule *module);
+extern void qfv_module_unload(QfvModule *module);
 
 #endif
 

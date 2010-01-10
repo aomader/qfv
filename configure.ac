@@ -3,7 +3,6 @@ AC_INIT([qfv], [0], [dotb52@gmail.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 AC_CONFIG_MACRO_DIR([m4])
-ACLOCAL_AMFLAGS = -I m4
 
 AC_LANG([C])
 AC_PROG_CC_C99
@@ -22,6 +21,10 @@ AC_CHECK_HEADERS([locale.h string.h])
 PKG_CHECK_MODULES(GTK, [gtk+-2.0])
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
+
+PKG_CHECK_MODULES(GTHREAD, [gthread-2.0])
+AC_SUBST(GTHREAD_CFLAGS)
+AC_SUBST(GTHREAD_LIBS)
 
 AM_CFLAGS="-Wall"
 AM_LDFLAGS="-Wl,--as-needed"

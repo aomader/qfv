@@ -1,5 +1,4 @@
 #include <qfv-module-manager.h>
-#include <libqfv/qfv-module.h>
 
 enum {
     PROP_0,
@@ -127,3 +126,38 @@ static gboolean qfv_module_manager_query_modules(QfvModuleManager *manager)
     return TRUE;
 }
 
+extern QfvModuleManager *qfv_module_manager_new(const gchar *module_path)
+{
+    g_return_val_if_fail(module_path != NULL, NULL);
+
+    return g_object_new(QFV_TYPE_MODULE_MANAGER, "module-path", module_path,
+        NULL);
+}
+
+extern QfvPlugin *qfv_module_manager_find_plugin(const gchar *filename)
+{
+    g_return_val_if_fail(filename != NULL, NULL);
+
+    guint n_plugins;
+    GType *plugins = g_type_children(QFV_TYPE_PLUGIN, &n_plugins);
+    QfvPlugin *plugin = NULL;
+
+    for (int i = 0; i < n_plugins && plugin == NULL; ++i) {
+        QfvPluginClass *klass = g_type_class_ref(plugins[i]);
+
+        for (gchar **patterns = klass->filenames; *patterns != NULL;
+            ++patterns)
+        {
+            if (g_pattern_match_simple(*patterns, filename) == TRUE) {
+                plugin = qfv_plugin_new(plugins[i]);
+                break;
+            }
+        }
+
+        g_type_class_unref(klass);
+    }
+
+    g_free(plugins);
+
+    return plugin;
+}
