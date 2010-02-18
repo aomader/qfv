@@ -24,15 +24,14 @@
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
 
-#include <qfv-module-manager.h>
-#include <libqfv/qfv-plugin.h>
+#include "qfv-module-manager.h"
 
 #define QFV_WINDOW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), \
     QFV_TYPE_WINDOW, QfvWindowPrivate))
 
 struct _QfvWindowPrivate {
     GtkAccelGroup *accel_group;
-    /* GtkListStore *list_store; */
+    GtkListStore *list_store;
     GtkWidget *tree_view;
     GdkPixbuf *icon_unknown;
     GdkPixbuf *icon_success;
@@ -125,7 +124,9 @@ static void qfv_window_init(QfvWindow *self)
 
     g_signal_connect(G_OBJECT(self), "destroy", G_CALLBACK(on_window_destroy),
         self);
-    
+    /**
+     * TODO correct path
+     */
     self->module_manager = qfv_module_manager_new(
         "/home/b52/Projekte/qfv/src/modules/.libs/");
 }
@@ -330,7 +331,7 @@ static GtkWidget *qfv_window_create_toolbar(QfvWindow *self)
 static GtkWidget *qfv_window_create_treeview(QfvWindow *self)
 {
     QfvWindowPrivate *priv = self->priv;
-    self->list_store = gtk_list_store_new(5, G_TYPE_INT, GDK_TYPE_PIXBUF,
+    priv->list_store = gtk_list_store_new(5, G_TYPE_INT, GDK_TYPE_PIXBUF,
         G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
     priv->tree_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(
         self->list_store));

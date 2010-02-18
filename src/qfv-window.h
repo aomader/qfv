@@ -27,7 +27,6 @@
 #include <gtk/gtk.h>
 
 #include "qfv-module-manager.h"
-#include "libqfv/qfv-module.h"
 
 #define QFV_TYPE_WINDOW (qfv_window_get_type())
 #define QFV_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), QFV_TYPE_WINDOW, \
@@ -51,8 +50,6 @@ struct _QfvWindow {
     
     QfvModule *current_module;
     gchar *current_dir;
-    
-    GtkListStore *list_store;
     
     GtkWidget *about_dialog;
     GtkWidget *modules_dialog;
